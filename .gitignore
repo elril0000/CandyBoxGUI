@@ -1,0 +1,10 @@
+build/
+.kdev4/
+*.kdev4
+src/*~
+*~
+*.user
+*.cxx
+*.kate-swp
+Config.hpp
+*.xml
