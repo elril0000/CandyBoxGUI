@@ -1,7 +1,10 @@
+#pragma once
+
 #include <QtWidgets>
 #include <QtWebKit>
 #include <QtWebKitWidgets>
 #include "Config.hpp"
+#include "Settings.hpp"
 
 class MainWin : public QMainWindow
 {
@@ -18,6 +21,8 @@ public slots:
 	void refresh();
 	void changeTab();
 	void closeTab(int index);
+	void writeOption();
+	void setProperties();
 	
 private:
 	QPushButton *_enterButton;

@@ -6,22 +6,52 @@ MainWin::MainWin(): QMainWindow()
 	_refreshButton = new QPushButton();
 	_lockBoolButton = new QPushButton();
 	_lockBoolButton->setCheckable(true);
-	_lockBoolButton->setChecked(true);
+	_lockBoolButton->setChecked(Settings::isLocked());
 	_addTabButton = new QPushButton;
 	
 	_refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/view-refresh.png")));
-	_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
+	if(_lockBoolButton->isChecked())
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
+	else
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-unlocked.png")));
+	
 	_addTabButton->setIcon(QIcon::fromTheme("add", QIcon("add.png")));
 	//_lockBoolButton->setFlat(true);
 	//_lockBoolButton->setUpdatesEnabled(false);
+	QStringList openedTab = Settings::getOpenedTab();
 	
-	
-	_tab = new QTabWidget;
-	_tab->addTab(newTab(tr("http://candies.aniwey.net/index.php")), tr("(New Game)"));
-	_tab->setTabsClosable(true);
 	_passwordLabel = new QLabel;
 	_passwordLine = new QLineEdit;
-	_passwordLine->setReadOnly(true);
+	_passwordLine->setReadOnly(Settings::isLocked());
+	
+	_tab = new QTabWidget;
+	
+	
+	if(openedTab.isEmpty())
+	{
+		_tab->addTab(newTab(tr("http://candies.aniwey.net/index.php")), tr("(New Game)"));
+	}
+	else
+	{
+		for(int i = 0 ; i < openedTab.count() ; i++)
+		{
+			if(openedTab[i] == "(New Game)")
+			{
+				_tab->addTab(newTab(tr("http://candies.aniwey.net/index.php")), tr("(New Game)"));
+			}
+			else
+			{
+				_tab->addTab(newTab("http://candies.aniwey.net/index.php?pass=" + openedTab[i]), openedTab[i]);
+			}
+		}
+	}
+	_tab->setCurrentIndex(0);
+	_tab->setTabsClosable(true);
+	
+	if(_tab->tabText(0) == "(New Game)")
+		_passwordLine->setText("");
+	else
+		_passwordLine->setText(_tab->tabText(0));
 	
 	connect(_passwordLine, SIGNAL(returnPressed()), this, SLOT(loadPassword()));
 	connect(_enterButton, SIGNAL(clicked()), this, SLOT(loadPassword()));
@@ -49,8 +79,9 @@ MainWin::MainWin(): QMainWindow()
 	QWidget *widgetCountainer = new QWidget;
 	widgetCountainer->setLayout(layout);
 	
+	setProperties();
+	setMinimumSize(500, 400);
 	setCentralWidget(widgetCountainer);
-	showMaximized();
 	QString windowTitles("Candy Box GUI v");
 	windowTitles += VERSION;
 	setWindowTitle(windowTitles);
@@ -141,6 +172,7 @@ void MainWin::closeTab(int index)
 	if(_tab->count() <= 1)
 	{
 		if(QMessageBox::question(this, tr("Unsaved Change"), tr("All unsaved change will be lost.\nContinue?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+			_tab->removeTab(index);
 			qApp->quit();
 	}
 	else
@@ -152,8 +184,37 @@ void MainWin::closeTab(int index)
 
 void MainWin::closeEvent(QCloseEvent * event)
 {
-    
+	
 	if(QMessageBox::question(this, tr("Unsaved Change"), tr("All unsaved change will be lost.\nContinue?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+	{
+		writeOption();
 		event->accept();
-
+	}
 }
+
+void MainWin::writeOption()
+{
+    Settings::setMaximized(isMaximized());
+
+    Settings::setPosition(pos());   
+    Settings::setSize(size());
+	Settings::setLocked(_lockBoolButton->isChecked());
+	QStringList openedTab;
+	for(int i = 0 ; i < _tab->count() ; i++)
+	{
+		openedTab.push_back(_tab->tabText(i));
+	}
+	Settings::setOpenedTab(openedTab);
+}
+
+void MainWin::setProperties()
+{
+	if(Settings::isMaximized())
+		showMaximized();
+	else
+	{
+		resize(Settings::getSize());
+		move(Settings::getPosition());
+	}
+}
+
