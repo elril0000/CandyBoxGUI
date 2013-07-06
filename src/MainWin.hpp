@@ -30,6 +30,8 @@ private:
 	QLabel *_passwordLabel;
 	QLineEdit *_passwordLine;
 	
+	void closeEvent(QCloseEvent *event);
+	
 	
 	
 };

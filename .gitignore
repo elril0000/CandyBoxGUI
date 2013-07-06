@@ -8,3 +8,4 @@ src/*~
 *.kate-swp
 Config.hpp
 *.xml
+*.directory

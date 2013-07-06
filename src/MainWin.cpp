@@ -9,9 +9,9 @@ MainWin::MainWin(): QMainWindow()
 	_lockBoolButton->setChecked(true);
 	_addTabButton = new QPushButton;
 	
-	_refreshButton->setIcon(QIcon::fromTheme("view-refresh"));
-	_lockBoolButton->setIcon(QIcon::fromTheme("object-locked"));
-	_addTabButton->setIcon(QIcon::fromTheme("add"));
+	_refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/view-refresh.png")));
+	_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
+	_addTabButton->setIcon(QIcon::fromTheme("add", QIcon("add.png")));
 	//_lockBoolButton->setFlat(true);
 	//_lockBoolButton->setUpdatesEnabled(false);
 	
@@ -103,19 +103,19 @@ void MainWin::lockPassword()
 {
 	if(_lockBoolButton->isChecked())
 	{
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked"));
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
 		_passwordLine->setReadOnly(true);
 	}
 	else
 	{
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked"));
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("image/object-unlocked.png")));
 		_passwordLine->setReadOnly(false);
 	}
 }
 
 void MainWin::newTabSlots()
 {
-	_tab->addTab(newTab(tr("http://candies.aniwey.net/index.php")), tr("(New Game)"));
+	_tab->setCurrentIndex(_tab->addTab(newTab(tr("http://candies.aniwey.net/index.php")), tr("(New Game)")));
 }
 
 void MainWin::refresh()
@@ -148,4 +148,12 @@ void MainWin::closeTab(int index)
 		if(QMessageBox::question(this, tr("Unsaved Change"), tr("All unsaved change will be lost.\nContinue?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			_tab->removeTab(index);
 	}
+}
+
+void MainWin::closeEvent(QCloseEvent * event)
+{
+    
+	if(QMessageBox::question(this, tr("Unsaved Change"), tr("All unsaved change will be lost.\nContinue?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+		event->accept();
+
 }
