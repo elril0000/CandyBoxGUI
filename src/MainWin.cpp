@@ -60,7 +60,7 @@ void MainWin::createCentralWidget()
 	
 	_autosaveCheck = new QCheckBox(tr("Autosave?"));
 	
-	_refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/view-refresh.png")));
+    _refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/refresh.png")));
 	if(_lockBoolButton->isChecked())
 		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
 	else
@@ -69,7 +69,7 @@ void MainWin::createCentralWidget()
 	_autosaveCheck->setChecked(Settings::isAutosaving());
 	autosave(Settings::isAutosaving());
 	
-	_addTabButton->setIcon(QIcon::fromTheme("add", QIcon("add.png")));
+    _addTabButton->setIcon(QIcon::fromTheme("add", QIcon("image/add.png")));
 	//_lockBoolButton->setFlat(true);
 	//_lockBoolButton->setUpdatesEnabled(false);
 	QStringList openedTab = Settings::getOpenedTab();
@@ -244,6 +244,7 @@ void MainWin::closeTab(int index)
 void MainWin::closeEvent(QCloseEvent * event)
 {
 	hide();
+    event->ignore();
 	
 }
 

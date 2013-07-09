@@ -5,7 +5,6 @@
 #include <QApplication>
 #include <QtWebKit>
 #include <QtWebKitWidgets>
-#include <qt4/QtCore/qvarlengtharray.h>
 #include "Config.hpp"
 #include "Settings.hpp"
 
