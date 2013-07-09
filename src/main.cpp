@@ -9,8 +9,8 @@ int main(int argc, char* argv[])
 	QApplication app(argc, argv);
 	cout << NAME << " v" << VERSION << endl;
 	
-	MainWin win;
-	win.show();
+	MainWin *win = new MainWin;
+	win->init();
 	
 	return app.exec();
 }

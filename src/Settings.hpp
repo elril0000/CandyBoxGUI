@@ -3,32 +3,24 @@
 #include "Config.hpp"
 #include <QtCore>
 
-class Settings : public QObject
+namespace Settings
 {
-    Q_OBJECT
-public:
-    Settings();
-    
-    static bool isMaximized();
-    static QSize getSize();
-    static QPoint getPosition();
-    //static QString getLang();
-	static QStringList getOpenedTab();
-    static bool isLocked();
+     bool isMaximized();
+     QSize getSize();
+     QPoint getPosition();
+    // QString getLang();
+	 QStringList getOpenedTab();
+     bool isLocked();
+	 bool isAutosaving();
 	
-    static void setMaximized(bool maximized);
-    static void setSize(QSize size);
-    static void setSize(int w, int h);
-    static void setPosition(QPoint position);
-    static void setPosition(int x, int y);
-    //static void setLang(QString lang);
-	static void setOpenedTab(QStringList openedTab);
-	static void setLocked(bool locked);
-    
-public slots:
-    
-private:
-    
-    
-    
-};
+	 void setAutosaving(bool autosaving);
+     void setMaximized(bool maximized);
+     void setSize(QSize size);
+     void setSize(int w, int h);
+     void setPosition(QPoint position);
+     void setPosition(int x, int y);
+    // void setLang(QString lang);
+	void setOpenedTab(QStringList openedTab);
+	void setLocked(bool locked);
+  
+}
