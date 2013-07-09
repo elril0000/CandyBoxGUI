@@ -301,12 +301,8 @@ void MainWin::init()
 	show();
 	
 	qApp->processEvents(); // Sans ça la position de l'icone n'est pas connue tout de suite
-	_trayIcon->setVisible(false);
-	qApp->processEvents();
-	_trayIcon->setVisible(true);
-	_trayIcon->show();
+	QTimer::singleShot(1000, _trayIcon, SLOT(show()));
 	
-	qApp->processEvents();
 	
 }
 
