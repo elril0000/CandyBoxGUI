@@ -26,6 +26,7 @@ MainWin::MainWin(): QMainWindow()
 	connect(_showAction, SIGNAL(triggered()), this, SLOT(showWindow()));
 	connect(_autosaveCheck, SIGNAL(clicked(bool)), this, SLOT(autosave(bool)));
 	connect(_autosaveTimer, SIGNAL(timeout()), this, SLOT(save()));
+	connect(_reloadTimer, SIGNAL(timeout()), this, SLOT(refreshNoWarning()));
 	connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(doubleClickTray(QSystemTrayIcon::ActivationReason)));
 }
 
@@ -51,6 +52,7 @@ void MainWin::createActions()
 void MainWin::createCentralWidget()
 {
 	_autosaveTimer = new QTimer(this);
+	_reloadTimer = new QTimer(this);
 	_enterButton = new QPushButton(tr("Enter"));
 	_refreshButton = new QPushButton();
 	_lockBoolButton = new QPushButton();
@@ -214,6 +216,14 @@ void MainWin::refresh()
 		ActualPage()->reload();
 }
 
+void MainWin::refreshNoWarning()
+{
+	for(int i = 0 ; i < _tab->count() ; i++)
+	{
+		_tab->widget(i)->findChild<QWebView* >()->reload();
+	}
+}
+
 void MainWin::changeTab()
 {
 	if(_tab->tabText(_tab->currentIndex()) == tr("(New Game)"))
@@ -311,10 +321,12 @@ void MainWin::autosave(bool saving)
 	if(saving)
 	{
 		_autosaveTimer->start(300000);
+		_reloadTimer->start(3601000);
 	}
 	else
 	{
 		_autosaveTimer->stop();
+		_reloadTimer->stop();
 	}
 }
 

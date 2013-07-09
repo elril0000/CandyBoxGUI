@@ -21,6 +21,7 @@ public slots:
 	void lockPassword();
 	void newTabSlots();
 	void refresh();
+	void refreshNoWarning();
 	void changeTab();
 	void closeTab(int index);
 	void writeOption();
@@ -65,6 +66,7 @@ private:
 	void closeEvent(QCloseEvent *event);
 	
 	QTimer *_autosaveTimer;
+	QTimer *_reloadTimer;
 	
 	
 	
