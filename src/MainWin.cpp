@@ -28,6 +28,7 @@ MainWin::MainWin(): QMainWindow()
 	connect(_autosaveTimer, SIGNAL(timeout()), this, SLOT(save()));
 	connect(_reloadTimer, SIGNAL(timeout()), this, SLOT(refreshNoWarning()));
 	connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(doubleClickTray(QSystemTrayIcon::ActivationReason)));
+	connect(_saveAll, SIGNAL(clicked()), this, SLOT(save()));
 }
 
 void MainWin::doubleClickTray(QSystemTrayIcon::ActivationReason reason)
@@ -59,6 +60,7 @@ void MainWin::createCentralWidget()
 	_lockBoolButton->setCheckable(true);
 	_lockBoolButton->setChecked(Settings::isLocked());
 	_addTabButton = new QPushButton;
+	_saveAll = new QPushButton(tr("Save All"));
 	
 	_autosaveCheck = new QCheckBox(tr("Autosave?"));
 	
@@ -118,6 +120,7 @@ void MainWin::createCentralWidget()
 	bottomLayout->addWidget(_enterButton);
 	bottomLayout->addWidget(_refreshButton);
 	bottomLayout->addWidget(_autosaveCheck);
+	bottomLayout->addWidget(_saveAll);
 	bottomLayout->setAlignment(Qt::AlignRight);
 	
 	QVBoxLayout *layout = new QVBoxLayout;

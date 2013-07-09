@@ -46,6 +46,7 @@ private:
 	QPushButton *_refreshButton;
 	QPushButton *_lockBoolButton;
 	QPushButton *_addTabButton;
+	QPushButton *_saveAll;
 	
 	QCheckBox *_autosaveCheck;
 	
