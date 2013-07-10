@@ -40,6 +40,7 @@ public slots:
 	void autosave(bool saving);
 	
 	void save();
+	void saveAndQuit();
 	
 private:
 	QPushButton *_enterButton;
@@ -53,6 +54,8 @@ private:
 	QAction *_quitAction;
 	QAction *_hideAction;
 	QAction *_showAction;
+	QAction *_saveAllAction;
+	QAction *_saveAllAndQuit;
 	
 	QMenu *_file;
 	

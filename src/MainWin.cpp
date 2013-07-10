@@ -29,6 +29,8 @@ MainWin::MainWin(): QMainWindow()
 	connect(_reloadTimer, SIGNAL(timeout()), this, SLOT(refreshNoWarning()));
 	connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(doubleClickTray(QSystemTrayIcon::ActivationReason)));
 	connect(_saveAll, SIGNAL(clicked()), this, SLOT(save()));
+	connect(_saveAllAction, SIGNAL(triggered()), this, SLOT(save()));
+	connect(_saveAllAndQuit, SIGNAL(triggered()), this, SLOT(saveAndQuit()));
 }
 
 void MainWin::doubleClickTray(QSystemTrayIcon::ActivationReason reason)
@@ -48,6 +50,10 @@ void MainWin::createActions()
 	_quitAction = new QAction(tr("&Quit"), this);
 	_quitAction->setShortcut(QKeySequence("Ctrl+Q"));
 	_showAction = new QAction(tr("&Show"), this);
+	_saveAllAction = new QAction(tr("&Save All"), this);
+	_saveAllAction->setShortcut(QKeySequence("Ctrl+S"));
+	_saveAllAndQuit = new QAction(tr("S&ave All && Quit"), this);
+	_saveAllAndQuit->setShortcut(QKeySequence("Ctrl+Alt+S"));
 }
 
 void MainWin::createCentralWidget()
@@ -137,11 +143,15 @@ void MainWin::createCentralWidget()
 void MainWin::createMenus()
 {
 	_file = menuBar()->addMenu(tr("&File"));
+	_file->addAction(_saveAllAction);
 	_file->addAction(_hideAction);
+	_file->addAction(_saveAllAndQuit);
 	_file->addAction(_quitAction);
 	
 	_trayIconMenu = new QMenu(this);
+	_trayIconMenu->addAction(_saveAllAction);
 	_trayIconMenu->addAction(_showAction);
+	_trayIconMenu->addAction(_saveAllAndQuit);
 	_trayIconMenu->addAction(_quitAction);
 }
 
@@ -264,7 +274,7 @@ void MainWin::closeEvent(QCloseEvent * event)
 void MainWin::writeOption()
 {
     Settings::setMaximized(isMaximized());
-
+	Settings::setAutosaving(_autosaveCheck->isChecked());
     Settings::setPosition(pos());   
     Settings::setSize(size());
 	Settings::setLocked(_lockBoolButton->isChecked());
@@ -313,7 +323,7 @@ void MainWin::init()
 {
 	show();
 	
-	qApp->processEvents(); // Sans ça la position de l'icone n'est pas connue tout de suite
+	qApp->processEvents();
 	QTimer::singleShot(1200, _trayIcon, SLOT(show()));
 	
 	
@@ -331,6 +341,13 @@ void MainWin::autosave(bool saving)
 		_autosaveTimer->stop();
 		_reloadTimer->stop();
 	}
+}
+
+void MainWin::saveAndQuit()
+{
+	save();
+	writeOption();
+	qApp->quit();
 }
 
 void MainWin::save()
