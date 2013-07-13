@@ -24,7 +24,7 @@ bool Settings::isLocked()
 	return settings->value("locked").toBool();
 }
 
-/*
+//*
 QString Settings::getLang()
 {
 	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");
@@ -98,7 +98,7 @@ void Settings::setOpenedTab(QStringList openedTab)
 	settings->setValue("tab", openedTab);
 }
 
-/*
+//*
 void Settings::setLang(QString lang)
 {
 	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");

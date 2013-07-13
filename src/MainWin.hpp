@@ -30,6 +30,8 @@ public slots:
 	void showWindow();
 	void close();
 	void init();
+	void selectLanguage();
+	void writeLanguage();
 	
 	void doubleClickTray(QSystemTrayIcon::ActivationReason reason);
 	
@@ -42,12 +44,18 @@ public slots:
 	void save();
 	void saveAndQuit();
 	
+	void about();
+	
 private:
 	QPushButton *_enterButton;
 	QPushButton *_refreshButton;
 	QPushButton *_lockBoolButton;
 	QPushButton *_addTabButton;
 	QPushButton *_saveAll;
+	
+	QComboBox *_language;
+	
+	QDialog *_languageSelectionWin;
 	
 	QCheckBox *_autosaveCheck;
 	
@@ -56,8 +64,12 @@ private:
 	QAction *_showAction;
 	QAction *_saveAllAction;
 	QAction *_saveAllAndQuit;
+	QAction *_selectLanguage;
+	QAction *_aboutAction;
+	QAction *_aboutQtAction;
 	
 	QMenu *_file;
+	QMenu *_aboutMenu;
 	
 	QTabWidget *_tab;
 	

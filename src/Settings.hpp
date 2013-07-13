@@ -5,21 +5,21 @@
 
 namespace Settings
 {
-     bool isMaximized();
-     QSize getSize();
-     QPoint getPosition();
-    // QString getLang();
-	 QStringList getOpenedTab();
-     bool isLocked();
-	 bool isAutosaving();
+	bool isMaximized();
+	QSize getSize();
+	QPoint getPosition();
+	QString getLang();
+	QStringList getOpenedTab();
+	bool isLocked();
+	bool isAutosaving();
 	
-	 void setAutosaving(bool autosaving);
-     void setMaximized(bool maximized);
-     void setSize(QSize size);
-     void setSize(int w, int h);
-     void setPosition(QPoint position);
-     void setPosition(int x, int y);
-    // void setLang(QString lang);
+	void setAutosaving(bool autosaving);
+	void setMaximized(bool maximized);
+	void setSize(QSize size);
+	void setSize(int w, int h);
+	void setPosition(QPoint position);
+	void setPosition(int x, int y);
+	void setLang(QString lang);
 	void setOpenedTab(QStringList openedTab);
 	void setLocked(bool locked);
   

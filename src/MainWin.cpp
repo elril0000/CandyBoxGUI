@@ -31,6 +31,9 @@ MainWin::MainWin(): QMainWindow()
 	connect(_saveAll, SIGNAL(clicked()), this, SLOT(save()));
 	connect(_saveAllAction, SIGNAL(triggered()), this, SLOT(save()));
 	connect(_saveAllAndQuit, SIGNAL(triggered()), this, SLOT(saveAndQuit()));
+	connect(_aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+	connect(_aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+	connect(_selectLanguage, SIGNAL(triggered()), this, SLOT(selectLanguage()));
 }
 
 void MainWin::doubleClickTray(QSystemTrayIcon::ActivationReason reason)
@@ -47,6 +50,7 @@ void MainWin::doubleClickTray(QSystemTrayIcon::ActivationReason reason)
 void MainWin::createActions()
 {
 	_hideAction = new QAction(tr("&Hide"), this);
+	_hideAction->setShortcut(QKeySequence("Ctrl+H"));
 	_quitAction = new QAction(tr("&Quit"), this);
 	_quitAction->setShortcut(QKeySequence("Ctrl+Q"));
 	_showAction = new QAction(tr("&Show"), this);
@@ -54,6 +58,9 @@ void MainWin::createActions()
 	_saveAllAction->setShortcut(QKeySequence("Ctrl+S"));
 	_saveAllAndQuit = new QAction(tr("S&ave All && Quit"), this);
 	_saveAllAndQuit->setShortcut(QKeySequence("Ctrl+Alt+S"));
+	_selectLanguage = new QAction(tr("Select Language"), this);
+	_aboutAction = new QAction(tr("About"), this);
+	_aboutQtAction = new QAction(tr("About Qt"), this);
 }
 
 void MainWin::createCentralWidget()
@@ -147,6 +154,12 @@ void MainWin::createMenus()
 	_file->addAction(_hideAction);
 	_file->addAction(_saveAllAndQuit);
 	_file->addAction(_quitAction);
+	
+	_aboutMenu = menuBar()->addMenu(tr("&About"));
+	_aboutMenu->addAction(_selectLanguage);
+	_aboutMenu->addSeparator();
+	_aboutMenu->addAction(_aboutAction);
+	_aboutMenu->addAction(_aboutQtAction);
 	
 	_trayIconMenu = new QMenu(this);
 	_trayIconMenu->addAction(_saveAllAction);
@@ -346,7 +359,71 @@ void MainWin::autosave(bool saving)
 void MainWin::saveAndQuit()
 {
 	save();
+	QMessageBox::information(this, tr("Succesfully saved"), tr("All games were successfully saved."));
 	writeOption();
 	qApp->quit();
 }
 
+void MainWin::selectLanguage()
+{
+	_languageSelectionWin = new QDialog(this);
+	
+	_language = new QComboBox();
+	QLabel *languageLabel = new QLabel(tr("Language"));
+	QPushButton *okButton = new QPushButton(tr("Ok"));
+	
+	QDir *dir = new QDir("translation");
+	QStringList filter;
+	filter << "candyboxgui_*.qm";
+	dir->setNameFilters(filter);
+	QStringList fileList = dir->entryList();
+	
+	_language->addItem("System");
+	_language->addItem("English");
+	
+	for(int i = 0 ; i < fileList.count() ; i++)
+	{
+		QString newLang = fileList[i].remove(0, 12);
+		newLang.remove(2, 3);
+		_language->addItem(newLang);
+		
+	}
+	
+	QBoxLayout *hlayout = new QHBoxLayout();
+	hlayout->addWidget(languageLabel);
+	hlayout->addWidget(_language);
+	QBoxLayout *layout = new QVBoxLayout();
+	layout->addLayout(hlayout);
+	layout->addWidget(okButton, Qt::AlignRight);
+	
+	_languageSelectionWin->setLayout(layout);
+	
+	connect(okButton, SIGNAL(clicked()), this, SLOT(writeLanguage()));
+	int index = 0;
+	
+	for(int i = 0 ; i < _language->count() ; i++)
+	{
+		if(Settings::getLang() == _language->itemText(i))
+		{
+			index = i;
+			i = _language->count();
+		}
+	}
+	_language->setCurrentIndex(index);
+	
+	_languageSelectionWin->exec();
+	
+	
+}
+
+void MainWin::writeLanguage()
+{
+	Settings::setLang(_language->currentText());
+	QMessageBox::information(this, tr("Restart Needed"), tr("You need to restart the application to apply the language"));
+	_languageSelectionWin->accept();
+}
+
+void MainWin::about()
+{
+	QMessageBox::information(this, tr("About"), tr("Special thanks to gracicot for the help he provided me : <a href=http://www.github.com/gracicot>gracicot's Github</a><br /><br />All the fallback icons are from the crystal theme by Everaldo Coelho.<br /> <a href=http://www.iconfinder.com/iconsets/crystalproject>http://www.iconfinder.com/iconsets/crystalproject</a>"));
+}
