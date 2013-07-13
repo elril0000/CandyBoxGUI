@@ -12,7 +12,12 @@ MainWin::MainWin(): QMainWindow()
 	setMinimumSize(500, 400);
 	QString windowTitles("Candy Box GUI v");
 	setWindowTitle(windowTitles + VERSION);
+#ifdef OS_Linux
+	setWindowIcon(QIcon("/usr/share/candyboxgui/image/candybox.png"));
+#endif
+#ifdef OS_Win32
 	setWindowIcon(QIcon("image/candybox.png"));
+#endif
 	
 	connect(_passwordLine, SIGNAL(returnPressed()), this, SLOT(loadPassword()));
 	connect(_enterButton, SIGNAL(clicked()), this, SLOT(loadPassword()));
@@ -76,17 +81,28 @@ void MainWin::createCentralWidget()
 	_saveAll = new QPushButton(tr("Save All"));
 	
 	_autosaveCheck = new QCheckBox(tr("Autosave?"));
+#ifdef OS_Linux
+    _refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("/usr/share/candyboxgui/image/refresh.png")));
+	if(_lockBoolButton->isChecked())
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("/usr/share/candyboxgui/image/object-locked.png")));
+	else
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("/usr/share/candyboxgui/image/object-unlocked.png")));
 	
-    _refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/refresh.png")));
+	_addTabButton->setIcon(QIcon::fromTheme("add", QIcon("/usr/share/candyboxgui/image/add.png")));
+#endif
+#ifdef OS_Win32
+	_refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/refresh.png")));
 	if(_lockBoolButton->isChecked())
 		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
 	else
 		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("image/object-unlocked.png")));
 	
+	_addTabButton->setIcon(QIcon::fromTheme("add", QIcon("image/add.png")));
+#endif
 	_autosaveCheck->setChecked(Settings::isAutosaving());
 	autosave(Settings::isAutosaving());
 	
-    _addTabButton->setIcon(QIcon::fromTheme("add", QIcon("image/add.png")));
+    
 	//_lockBoolButton->setFlat(true);
 	//_lockBoolButton->setUpdatesEnabled(false);
 	QStringList openedTab = Settings::getOpenedTab();
@@ -170,9 +186,16 @@ void MainWin::createMenus()
 
 void MainWin::createTrayIcon()
 {
-	_trayIcon = new QSystemTrayIcon(QIcon("image/candybox.png"), this);
+	_trayIcon = new QSystemTrayIcon(this);
+#ifdef OS_Linux
+	_trayIcon->setIcon(QIcon("/usr/share/candyboxgui/image/candybox.png"));
+#endif
+#ifdef OS_Win32
+	_trayIcon->setIcon(QIcon("image/candybox.png"));
+#endif
 	_trayIcon->setContextMenu(_trayIconMenu);
 	_trayIcon->setToolTip(tr("Candy Box GUI"));
+
 }
 
 QWebView *MainWin::ActualPage()
@@ -221,12 +244,23 @@ void MainWin::lockPassword()
 {
 	if(_lockBoolButton->isChecked())
 	{
+#ifdef OS_Linux
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("/usr/share/candyboxgui/image/object-locked.png")));
+#endif
+#ifdef OS_Win32
 		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
+#endif
 		_passwordLine->setReadOnly(true);
 	}
 	else
 	{
+#ifdef OS_Linux
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("/usr/share/candyboxguiimage/object-unlocked.png")));
+#endif
+#ifdef OS_Win32
 		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("image/object-unlocked.png")));
+#endif
+		
 		_passwordLine->setReadOnly(false);
 	}
 }

@@ -4,11 +4,20 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(VERSION_MAJOR 1)
-set(VERSION_MINOR 4BETA)
+set(VERSION_MINOR 4)
 set(LIBRARY_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 include_directories("src/")
 add_definitions(-std=c++11) 
+if(UNIX)
+	IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    # Linux specific code
+    SET(OPERATINGSYSTEM Linux)
+	ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+elseif(WIN32)
+	set(OPERATINGSYSTEM Win32)
+	
+endif()
 
 configure_file(
   "${PROJECT_SOURCE_DIR}/src/Config.hpp.in"
@@ -28,8 +37,8 @@ if (UPDATE_TS_FILE)
 else (UPDATE_TS_FILE)
   QT5_ADD_TRANSLATION(QM_FILES translation/candyboxgui_fr.ts)
 endif (UPDATE_TS_FILE)
-
 if(WIN32)
+	
 	if(CMAKE_BUILD_TYPE MATCHES Release)
 		add_executable(${PROJECT_NAME} WIN32 ${SRCS} src/save/MainWinSave.cpp ${QM_FILES})
 	else()
@@ -40,3 +49,11 @@ else()
 endif()
 
 qt5_use_modules(${PROJECT_NAME} Core Gui Widgets WebKit WebKitWidgets)
+
+if(UNIX)
+	INSTALL(TARGETS ${PROJECT_NAME} DESTINATION bin)
+	INSTALL(FILES ${QM_FILES} DESTINATION /usr/share/candyboxgui/translation)
+	INSTALL(FILES image/* DESTINATION /usr/share/candyboxgui/image)
+endif(UNIX)
+
+

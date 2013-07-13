@@ -1,10 +1,9 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#pragma once
 
 #define VERSION "@VERSION_MAJOR@.@VERSION_MINOR@"
 #define SEL_BEFORE "E4G01N56tYrBm3"
 #define SEL_AFTER "p02T93Dmi29snd2Gt"
 #define NAME "@PROJECT_NAME@"
 #define CMAKE_@CMAKE_BUILD_TYPE@
+#define OS_@OPERATINGSYSTEM@
 
-#endif //CONFIG_H
