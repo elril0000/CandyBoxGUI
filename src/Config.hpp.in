@@ -6,4 +6,5 @@
 #define NAME "@PROJECT_NAME@"
 #define CMAKE_@CMAKE_BUILD_TYPE@
 #define OS_@OPERATINGSYSTEM@
+#define APP_DIRECTORY QString("@APP_DIRECTORY@")
 

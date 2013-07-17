@@ -11,12 +11,7 @@ MainWin::MainWin(): QMainWindow()
 	setMinimumSize(500, 400);
 	QString windowTitles("Candy Box GUI v");
 	setWindowTitle(windowTitles + VERSION);
-#ifdef OS_Linux
-	setWindowIcon(QIcon("/usr/share/candyboxgui/image/candybox.png"));
-#endif
-#ifdef OS_Win32
-	setWindowIcon(QIcon("image/candybox.png"));
-#endif
+	setWindowIcon(QIcon(APP_DIRECTORY + "image/candybox.png"));
 	
 	connect(_passwordLine, SIGNAL(returnPressed()), this, SLOT(loadPassword()));
 	connect(_enterButton, SIGNAL(clicked()), this, SLOT(loadPassword()));
@@ -69,12 +64,7 @@ void MainWin::createActions()
 	_aboutQtAction = new QAction(tr("About Qt"), this);
 	_refreshAction = new QAction(tr("Refresh"), this);
 	
-#ifdef OS_Linux
-	_refreshAction->setIcon(QIcon::fromTheme("view-refresh", QIcon("/usr/share/candyboxgui/image/refresh.png")));
-#endif
-#ifdef OS_Win32
-	_refreshAction->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/refresh.png")));
-#endif
+	_refreshAction->setIcon(QIcon::fromTheme("view-refresh", QIcon(APP_DIRECTORY + "image/refresh.png")));
 }
 
 void MainWin::createCentralWidget()
@@ -90,24 +80,15 @@ void MainWin::createCentralWidget()
 	_saveAll = new QPushButton(tr("Save All"));
 	
 	_autosaveCheck = new QCheckBox(tr("Autosave?"));
-#ifdef OS_Linux
-    _refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("/usr/share/candyboxgui/image/refresh.png")));
-	if(_lockBoolButton->isChecked())
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("/usr/share/candyboxgui/image/object-locked.png")));
-	else
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("/usr/share/candyboxgui/image/object-unlocked.png")));
 	
-	_addTabButton->setIcon(QIcon::fromTheme("add", QIcon("/usr/share/candyboxgui/image/add.png")));
-#endif
-#ifdef OS_Win32
-	_refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/refresh.png")));
+    _refreshButton->setIcon(QIcon::fromTheme("view-refresh", QIcon(APP_DIRECTORY + "image/refresh.png")));
 	if(_lockBoolButton->isChecked())
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon(APP_DIRECTORY + "image/object-locked.png")));
 	else
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("image/object-unlocked.png")));
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon(APP_DIRECTORY + "image/object-unlocked.png")));
 	
-	_addTabButton->setIcon(QIcon::fromTheme("add", QIcon("image/add.png")));
-#endif
+	_addTabButton->setIcon(QIcon::fromTheme("add", QIcon(APP_DIRECTORY + "image/add.png")));
+
 	_autosaveCheck->setChecked(Settings::isAutosaving());
 	autosave(Settings::isAutosaving());
 	
@@ -199,12 +180,8 @@ void MainWin::createMenus()
 void MainWin::createTrayIcon()
 {
 	_trayIcon = new QSystemTrayIcon(this);
-#ifdef OS_Linux
-	_trayIcon->setIcon(QIcon("/usr/share/candyboxgui/image/candybox.png"));
-#endif
-#ifdef OS_Win32
-	_trayIcon->setIcon(QIcon("image/candybox.png"));
-#endif
+
+	_trayIcon->setIcon(QIcon(APP_DIRECTORY + "image/candybox.png"));
 	_trayIcon->setContextMenu(_trayIconMenu);
 	_trayIcon->setToolTip(tr("Candy Box GUI"));
 
@@ -257,22 +234,12 @@ void MainWin::lockPassword()
 {
 	if(_lockBoolButton->isChecked())
 	{
-#ifdef OS_Linux
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("/usr/share/candyboxgui/image/object-locked.png")));
-#endif
-#ifdef OS_Win32
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon("image/object-locked.png")));
-#endif
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-locked", QIcon(APP_DIRECTORY + "image/object-locked.png")));
 		_passwordLine->setReadOnly(true);
 	}
 	else
 	{
-#ifdef OS_Linux
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("/usr/share/candyboxguiimage/object-unlocked.png")));
-#endif
-#ifdef OS_Win32
-		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon("image/object-unlocked.png")));
-#endif
+		_lockBoolButton->setIcon(QIcon::fromTheme("object-unlocked", QIcon(APP_DIRECTORY + "object-unlocked.png")));
 		
 		_passwordLine->setReadOnly(false);
 	}
