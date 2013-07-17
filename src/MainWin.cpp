@@ -344,6 +344,8 @@ void MainWin::writeOption()
 		openedTab.push_back(_tab->tabText(i));
 	}
 	Settings::setOpenedTab(openedTab);
+	Settings::setLang(Settings::getLang());
+	
 }
 
 void MainWin::setProperties()

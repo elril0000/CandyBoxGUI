@@ -28,7 +28,7 @@ bool Settings::isLocked()
 QString Settings::getLang()
 {
 	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");
-	return settings->value("lang").toString();
+	return settings->value("lang", "System").toString();
 }//*/
 
 bool Settings::isMaximized()

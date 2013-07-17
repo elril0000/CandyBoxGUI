@@ -89,5 +89,4 @@ private:
 	QTimer *_reloadTimer;
 	
 	
-	
 };
