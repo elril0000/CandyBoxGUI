@@ -2,11 +2,10 @@
 
 MainWin::MainWin(): QMainWindow()
 {
-	
-	createCentralWidget();
 	createActions();
 	createMenus();
 	createTrayIcon();
+	createCentralWidget();
 	
 	setProperties();
 	setMinimumSize(500, 400);
@@ -39,6 +38,8 @@ MainWin::MainWin(): QMainWindow()
 	connect(_aboutAction, SIGNAL(triggered()), this, SLOT(about()));
 	connect(_aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 	connect(_selectLanguage, SIGNAL(triggered()), this, SLOT(selectLanguage()));
+	connect(_refreshAction, SIGNAL(triggered()), this, SLOT(refresh()));
+	
 }
 
 void MainWin::doubleClickTray(QSystemTrayIcon::ActivationReason reason)
@@ -66,6 +67,14 @@ void MainWin::createActions()
 	_selectLanguage = new QAction(tr("Select Language"), this);
 	_aboutAction = new QAction(tr("About"), this);
 	_aboutQtAction = new QAction(tr("About Qt"), this);
+	_refreshAction = new QAction(tr("Refresh"), this);
+	
+#ifdef OS_Linux
+	_refreshAction->setIcon(QIcon::fromTheme("view-refresh", QIcon("/usr/share/candyboxgui/image/refresh.png")));
+#endif
+#ifdef OS_Win32
+	_refreshAction->setIcon(QIcon::fromTheme("view-refresh", QIcon("image/refresh.png")));
+#endif
 }
 
 void MainWin::createCentralWidget()
@@ -182,6 +191,9 @@ void MainWin::createMenus()
 	_trayIconMenu->addAction(_showAction);
 	_trayIconMenu->addAction(_saveAllAndQuit);
 	_trayIconMenu->addAction(_quitAction);
+	
+	_webMenu = new QMenu(this);
+	_webMenu->addAction(_refreshAction);
 }
 
 void MainWin::createTrayIcon()
@@ -207,7 +219,8 @@ QWidget *MainWin::newTab(QUrl url)
 {
 	QWidget *widgetCountainer = new QWidget;
 	QWebView *webPage = new QWebView;
-	
+	webPage->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(webPage, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(webMenuExec(QPoint)));
 	
 	QVBoxLayout *layout = new QVBoxLayout;
 	layout->setContentsMargins(0,0,0,0);
@@ -335,6 +348,7 @@ void MainWin::writeOption()
 
 void MainWin::setProperties()
 {
+	
 	if(Settings::isMaximized())
 		showMaximized();
 	else
@@ -460,4 +474,9 @@ void MainWin::writeLanguage()
 void MainWin::about()
 {
 	QMessageBox::information(this, tr("About"), tr("Special thanks to gracicot for the help he provided me : <a href=http://www.github.com/gracicot>gracicot's Github</a><br /><br />All the fallback icons are from the crystal theme by Everaldo Coelho.<br /> <a href=http://www.iconfinder.com/iconsets/crystalproject>http://www.iconfinder.com/iconsets/crystalproject</a>"));
+}
+
+void MainWin::webMenuExec(QPoint point)
+{
+	_webMenu->exec(QCursor::pos());
 }

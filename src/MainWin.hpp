@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QtWebKit>
 #include <QtWebKitWidgets>
+#include <iostream>
 #include "Config.hpp"
 #include "Settings.hpp"
 
@@ -32,6 +33,7 @@ public slots:
 	void init();
 	void selectLanguage();
 	void writeLanguage();
+	void webMenuExec(QPoint point);
 	
 	void doubleClickTray(QSystemTrayIcon::ActivationReason reason);
 	
@@ -67,9 +69,11 @@ private:
 	QAction *_selectLanguage;
 	QAction *_aboutAction;
 	QAction *_aboutQtAction;
+	QAction *_refreshAction;
 	
 	QMenu *_file;
 	QMenu *_aboutMenu;
+	QMenu *_webMenu;
 	
 	QTabWidget *_tab;
 	
