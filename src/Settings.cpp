@@ -43,6 +43,18 @@ bool Settings::isAutosaving()
 	return settings->value("Autosave").toBool();
 }
 
+int Settings::getAutosaveTime()
+{
+	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");
+	return settings->value("AutosaveTime", 5).toInt();
+}
+
+int Settings::getRefreshTime()
+{
+	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");
+	return settings->value("RefreshTime", 60).toInt();
+}
+
 void Settings::setAutosaving(bool autosaving)
 {
 	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");
@@ -104,3 +116,15 @@ void Settings::setLang(QString lang)
 	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");
 	settings->setValue("lang", lang);
 }//*/
+
+void Settings::setAutosaveTime(int autosavetime)
+{
+	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");
+	settings->setValue("AutosaveTime", autosavetime);
+}
+
+void Settings::setRefreshTime(int refreshTime)
+{
+	QSettings *settings = new QSettings("Candy Box GUI", "Candy Box GUI");
+	settings->setValue("RefreshTime", refreshTime);
+}

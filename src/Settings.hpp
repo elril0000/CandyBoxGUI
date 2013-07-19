@@ -12,6 +12,8 @@ namespace Settings
 	QStringList getOpenedTab();
 	bool isLocked();
 	bool isAutosaving();
+	int getRefreshTime();
+	int getAutosaveTime();
 	
 	void setAutosaving(bool autosaving);
 	void setMaximized(bool maximized);
@@ -22,5 +24,7 @@ namespace Settings
 	void setLang(QString lang);
 	void setOpenedTab(QStringList openedTab);
 	void setLocked(bool locked);
+	void setAutosaveTime(int autosavetime);
+	void setRefreshTime(int refreshTime);
   
 }

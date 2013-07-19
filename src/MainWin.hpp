@@ -31,8 +31,9 @@ public slots:
 	void showWindow();
 	void close();
 	void init();
-	void selectLanguage();
-	void writeLanguage();
+	void writeSettings();
+	
+	void option();
 	void webMenuExec(QPoint point);
 	
 	void doubleClickTray(QSystemTrayIcon::ActivationReason reason);
@@ -48,16 +49,13 @@ public slots:
 	
 	void about();
 	
+	
 private:
 	QPushButton *_enterButton;
 	QPushButton *_refreshButton;
 	QPushButton *_lockBoolButton;
 	QPushButton *_addTabButton;
 	QPushButton *_saveAll;
-	
-	QComboBox *_language;
-	
-	QDialog *_languageSelectionWin;
 	
 	QCheckBox *_autosaveCheck;
 	
@@ -70,6 +68,7 @@ private:
 	QAction *_aboutAction;
 	QAction *_aboutQtAction;
 	QAction *_refreshAction;
+	QAction *_optionAction;
 	
 	QMenu *_file;
 	QMenu *_aboutMenu;
@@ -87,6 +86,14 @@ private:
 	
 	QTimer *_autosaveTimer;
 	QTimer *_reloadTimer;
+	
+	QDialog *_optionWin;
+	QSpinBox *_autosaveSpin;
+	QSpinBox *_refreshSpin;
+	QComboBox *_language;
+	
+	int _autosaveTime;
+	int _refreshTime;
 	
 	
 };
