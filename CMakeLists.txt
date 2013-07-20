@@ -58,7 +58,7 @@ endif()
 qt5_use_modules(${PROJECT_NAME} Core Gui Widgets WebKit WebKitWidgets)
 
 if(UNIX)
-	INSTALL(TARGETS ${PROJECT_NAME} DESTINATION bin)
+	INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 	INSTALL(FILES ${QM_FILES} DESTINATION /usr/share/candyboxgui/translation)
 	file(GLOB_RECURSE image image/*)
 	INSTALL(FILES ${image} DESTINATION /usr/share/candyboxgui/image)

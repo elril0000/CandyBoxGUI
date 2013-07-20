@@ -360,6 +360,14 @@ void MainWin::init()
 	
 	
 }
+void MainWin::initInBack()
+{
+	show();
+	setVisible(false);
+	
+	qApp->processEvents();
+	QTimer::singleShot(1200, _trayIcon, SLOT(show()));
+}
 
 void MainWin::autosave(bool saving)
 {

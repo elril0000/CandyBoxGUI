@@ -31,6 +31,7 @@ public slots:
 	void showWindow();
 	void close();
 	void init();
+	void initInBack();
 	void writeSettings();
 	
 	void option();

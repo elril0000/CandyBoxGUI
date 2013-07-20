@@ -57,7 +57,18 @@ int main(int argc, char* argv[])
 	}
 
 	MainWin *win = new MainWin;
-	win->init();
+	QStringList args = QCoreApplication::arguments();
+	if(args.count() > 1)
+	{
+		if(args.at(1) == "-b" || args.at(1) == "--background")
+		{
+			win->initInBack();
+		}
+	}
+	else
+	{
+		win->init();
+	}
 	
 	return app.exec();
 }
