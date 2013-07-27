@@ -59,9 +59,10 @@ qt5_use_modules(${PROJECT_NAME} Core Gui Widgets WebKit WebKitWidgets)
 
 if(UNIX)
 	INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-	INSTALL(FILES ${QM_FILES} DESTINATION /usr/share/candyboxgui/translation)
-	file(GLOB_RECURSE image image/*)
-	INSTALL(FILES ${image} DESTINATION /usr/share/candyboxgui/image)
+	INSTALL(FILES ${QM_FILES} DESTINATION share/candyboxgui/translation)
+	set(image "image/add.png" "image/candybox.png" "image/object-locked.png" "image/object-unlocked.png" "image/refresh.png")
+	INSTALL(FILES ${image} DESTINATION share/candyboxgui/image)
+	INSTALL(DIRECTORY icons DESTINATION share/icons/hicolor)
 endif(UNIX)
 
 

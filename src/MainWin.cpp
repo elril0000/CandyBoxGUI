@@ -178,7 +178,7 @@ void MainWin::createTrayIcon()
 {
 	_trayIcon = new QSystemTrayIcon(this);
 
-	_trayIcon->setIcon(QIcon(APP_DIRECTORY + "image/candybox.png"));
+	_trayIcon->setIcon(QIcon::fromTheme("candyboxgui", QIcon(APP_DIRECTORY + "image/candybox.png")));
 	_trayIcon->setContextMenu(_trayIconMenu);
 	_trayIcon->setToolTip(tr("Candy Box GUI"));
 
@@ -326,7 +326,7 @@ void MainWin::setProperties()
 	setMinimumSize(500, 400);
 	QString windowTitles("Candy Box GUI v");
 	setWindowTitle(windowTitles + VERSION);
-	setWindowIcon(QIcon(APP_DIRECTORY + "image/candybox.png"));
+	setWindowIcon(QIcon::fromTheme("candyboxgui", QIcon(APP_DIRECTORY + "image/candybox.png")));
 }
 
 void MainWin::hide()
