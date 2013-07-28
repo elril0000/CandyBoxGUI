@@ -16,6 +16,7 @@ public:
     MainWin();
 	QWebView *ActualPage();
 	QWidget *newTab(QUrl url);
+	void setAutosave(bool doAutosave = false);
 	
 public slots:
 	void loadPassword();

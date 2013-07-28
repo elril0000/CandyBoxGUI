@@ -31,6 +31,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "MainWin.hpp"
 #include "Settings.hpp"
 
+#define SHOW true
+#define DONTSHOW false
 using namespace std;
 int main(int argc, char* argv[])
 {
@@ -58,17 +60,60 @@ int main(int argc, char* argv[])
 
 	MainWin *win = new MainWin;
 	QStringList args = QCoreApplication::arguments();
+	bool show = SHOW;
 	if(args.count() > 1)
 	{
-		if(args.at(1) == "-b" || args.at(1) == "--background")
+		for(int i = 1 ; i < args.count() ; i++)
 		{
-			win->initInBack();
+			if(args.at(i).left(2) != "--")
+			{
+				for(int j = 1 ; j < args.at(i).count() ; j++)
+				{
+					cout << j;
+					if(strncmp(&args.at(i).toStdString().c_str()[j], "b", 1) == 0)
+					{
+						show = DONTSHOW;
+						cout << args.at(i).toStdString().at(j) << endl;
+					}
+					else if(strncmp(&args.at(i).toStdString().c_str()[j], "a", 1) == 0)
+					{
+						win->setAutosave(true);
+						cout << args.at(i).toStdString().at(j) << endl; 
+					}
+					else if(strncmp(&args.at(i).toStdString().c_str()[j], "n", 1) == 0)
+					{
+						win->setAutosave(false);
+						cout << args.at(i).toStdString().at(j) << endl;
+						
+					}
+					else
+						cout << "Wrong arguments provided : " << &args.at(i).toStdString().at(j) << endl;
+				}
+			}
+			else if(args.at(i).left(2) == "--")
+			{
+				if(args.at(i).toStdString() == "--background")
+					show = DONTSHOW;
+				else if(args.at(i).toStdString() == "--autosave")
+					win->setAutosave(true);
+				else if(args.at(i).toStdString() == "--noautosave")
+					win->setAutosave(false);
+				else
+					cout << "Wrong arguments provided : " << args.at(i).toStdString() << endl;
+			}
 		}
+		
 	}
-	else
+
+	if(show)
 	{
 		win->init();
 	}
+	else
+	{
+		win->initInBack();
+	}
+	
 	
 	return app.exec();
 }

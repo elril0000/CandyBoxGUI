@@ -383,6 +383,11 @@ void MainWin::autosave(bool saving)
 	}
 }
 
+void MainWin::setAutosave(bool doAutosave)
+{
+	_autosaveCheck->setChecked(doAutosave);
+}
+
 void MainWin::saveAndQuit()
 {
 	save();
