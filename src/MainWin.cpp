@@ -399,7 +399,7 @@ void MainWin::saveAndQuit()
 void MainWin::option()
 {
 	_optionWin = new QDialog(this);
-	
+	_optionWin->setWindowTitle(tr("Option"));
 	_language = new QComboBox();
 	QLabel *languageLabel = new QLabel(tr("Language"));
 	QLabel *autosaveLabel = new QLabel(tr("Autosave every"));
