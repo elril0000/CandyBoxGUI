@@ -39,7 +39,7 @@
     </message>
     <message>
         <location filename="../src/MainWin.cpp" line="62"/>
-        <location filename="../src/MainWin.cpp" line="490"/>
+        <location filename="../src/MainWin.cpp" line="503"/>
         <source>About</source>
         <translation>À Propos</translation>
     </message>
@@ -123,64 +123,69 @@ Continue?</source>
         <translation>Toute progression non sauvegardé sera perdue. Continuer?</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="381"/>
+        <location filename="../src/MainWin.cpp" line="394"/>
         <source>Succesfully saved</source>
         <translation>Sauvegarde Réussi</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="381"/>
+        <location filename="../src/MainWin.cpp" line="394"/>
         <source>All games were successfully saved.</source>
         <translation>Toute les parties ont été sauvegardé avec succès.</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="391"/>
-        <location filename="../src/MainWin.cpp" line="432"/>
+        <location filename="../src/MainWin.cpp" line="402"/>
+        <source>Option</source>
+        <translation>Option</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWin.cpp" line="404"/>
+        <location filename="../src/MainWin.cpp" line="445"/>
         <source>Language</source>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="392"/>
+        <location filename="../src/MainWin.cpp" line="405"/>
         <source>Autosave every</source>
         <translation>Autosave chaque</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="393"/>
+        <location filename="../src/MainWin.cpp" line="406"/>
         <source>Refresh every</source>
         <translation>Actualiser chaque</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="396"/>
-        <location filename="../src/MainWin.cpp" line="401"/>
+        <location filename="../src/MainWin.cpp" line="409"/>
+        <location filename="../src/MainWin.cpp" line="414"/>
         <source> min</source>
         <translation> min</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="405"/>
+        <location filename="../src/MainWin.cpp" line="418"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="406"/>
+        <location filename="../src/MainWin.cpp" line="419"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="425"/>
+        <location filename="../src/MainWin.cpp" line="438"/>
         <source>Autosave</source>
         <translation>Autosave</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="484"/>
+        <location filename="../src/MainWin.cpp" line="497"/>
         <source>Restart Needed</source>
         <translation>Redémarrer l&apos;application</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="484"/>
+        <location filename="../src/MainWin.cpp" line="497"/>
         <source>You need to restart the application to apply the language</source>
         <translation>Vous devez redémarrer l&apos;application pour appliquer la langue</translation>
     </message>
     <message>
-        <location filename="../src/MainWin.cpp" line="490"/>
+        <location filename="../src/MainWin.cpp" line="503"/>
         <source>Special thanks to gracicot for the help he provided me : &lt;a href=http://www.github.com/gracicot&gt;gracicot&apos;s Github&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;All the fallback icons are from the crystal theme by Everaldo Coelho.&lt;br /&gt; &lt;a href=http://www.iconfinder.com/iconsets/crystalproject&gt;http://www.iconfinder.com/iconsets/crystalproject&lt;/a&gt;</source>
         <translation>Remerciement spécial à gracicot pour son aide : &lt;a href=http://www.github.com/gracicot&gt;Github de gracicot&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Toute les icones &lt;em&gt;fallback&lt;/em&gt; sont issus du thème crystal par Everaldo Coelho.&lt;br /&gt; &lt;a href=http://www.iconfinder.com/iconsets/crystalproject&gt;http://www.iconfinder.com/iconsets/crystalproject&lt;/a&gt;</translation>
     </message>
